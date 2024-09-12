@@ -1,0 +1,24 @@
+version: '3'
+services:
+  frontend:
+    build: ./public
+    ports:
+      - "3000:3000"
+  api:
+    build: ./server
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./server/.env
+    depends_on:
+      - mongo
+  mongo:
+    container_name: mongo
+    image: mongo:latest
+    volumes:
+      - mongodb_data:/data/db
+    ports:
+      - "27017:27017"
+
+volumes:
+  mongodb_data:
